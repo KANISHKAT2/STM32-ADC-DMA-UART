@@ -25,7 +25,6 @@ int main(void)
   MX_TIM2_Init();
   MX_USART2_UART_Init();
 
-  /* Start peripherals */
   HAL_TIM_Base_Start(&htim2);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&adc_value, 1);
 
@@ -35,7 +34,7 @@ int main(void)
   }
 }
 
-/* ADC DMA complete callback */
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
   if (hadc->Instance == ADC1)
@@ -76,7 +75,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.NbrOfConversion = 1;
   HAL_ADC_Init(&hadc1);
 
-  sConfig.Channel = ADC_CHANNEL_0;   // PA0
+  sConfig.Channel = ADC_CHANNEL_0;  
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
