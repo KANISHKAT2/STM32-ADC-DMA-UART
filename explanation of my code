@@ -1,0 +1,33 @@
+STM32 Timer Triggered ADC with DMA and  UART:
+
+    The objective of this project is to implement a timer-controlled ADC data acquisition system using STM32. A hardware timer operating at 100 Hz triggers ADC conversion. 
+The converted data is transferred using DMA and transmitted through UART.
+
+
+Explanation of Code:
+
+Timer Configuration:
+Timer 2 is configured to generate an update event at 100 Hz (every 10 ms). The timer trigger output  is used as the external trigger source for the ADC, ensuring precise and periodic sampling.
+ 
+ADC Operation:
+ADC1 is configured in external trigger mode. Each timer trigger initiates one ADC conversion with 12-bit resolution. This ensures synchronized sampling based on the timer event.
+ADC1 is used because STM32 microcontrollers contain multiple ADC peripherals. ADC1 specifies the exact ADC hardware block used for analog-to-digital conversion.
+
+Direct Memory Access (DMA) Transfer:
+DMA is enabled for ADC1 so that the ADC conversion result is automatically transferred to memory without CPU involvement. This reduces processor load and improves efficiency.
+
+DMA Completion Callback:
+After DMA transfer completion, the HAL_ADC_ConvCpltCallback function is executed. Inside this function, the ADC value is formatted into a text message.
+
+UART Communication:
+USART2 is configured at 9600 baud rate to transmit the ADC values to a PC. The transmitted data can be viewed on a serial terminal such as PuTTY or Tera Term.
+
+Expected Output:
+On real hardware, the serial terminal would display ADC values as shown below:
+
+ADC Value: 2048
+ADC Value: 2051
+ADC Value: 2049
+
+This code demonstrates the integration of Timer, ADC, DMA, and UART peripherals to build an efficient real-time embedded system. 
+The design ensures precise periodic sampling, minimal CPU usage, and reliable serial data transmission.
